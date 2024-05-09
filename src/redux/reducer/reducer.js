@@ -1,6 +1,8 @@
 let initialState = {
     count: 0,
-    value: null
+    value: null,
+    id: null,
+    pwd: null
 }
 
 // reducer는 store에게 항상 반환해줘야한다.
@@ -10,7 +12,7 @@ function reducer(state = initialState, action) {
 
     if (action.type === "INCREMENT") {
         // return 값을 이용하여 state의 값을 변경한다.
-        return {...state, count : state.count + 1, value: '증가'};
+        return {...state, count : state.count + action.payload.num, value: '증가'};
 
         // ...state 로 표기하는 이유?  *기본적으로 사용하는게 좋다.
         // store에 state가 여러개일 경우,
@@ -22,6 +24,13 @@ function reducer(state = initialState, action) {
     }
     else if (action.type === "RESET") {
         return {...state, count : 0, value: '초기화'};
+    }
+    else if (action.type === "LOGIN" || action.type === "LOGOUT") {
+        return {
+            ...state,
+            id: action.payload.id,
+            pwd: action.payload.pwd
+        };
     }
 
     // if 조건에 해당하지 않을 경우
@@ -37,6 +46,10 @@ function reducer(state = initialState, action) {
     //         return {...state, count : state.count - 1, value: '감소'};
     //     case "RESET":
     //         return {...state, count : 0, value: '초기화'};
+    //     case "LOGIN":
+    //         return {...state, id: action.payload.id, pwd: action.payload.pwd};
+    //     case "LOGOUT":
+    //         return {...state, id: action.payload.id, pwd: action.payload.pwd};
     //
     //     default:
     //         return { ...state }
